@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="stylesheets/main.css">
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script src="https://d3js.org/d3-hsv.v0.0.min.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="./javascripts/favicon.png"/>
+  <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script> -->
+  <title>CO2 emission explorer</title>
+</head>
+
+<body>
+  <div id="dialog-form" title="">
+    <!-- <form> -->
+      <fieldset>
+      </fieldset>
+    <!-- </form> -->
+  </div>
+  <div id = "headerBar">
+    <span style="text-align: center;">CO2 emission explorer</span>      
+    <a style="padding-right: 10px; text-align: center; color: yellow; text-decoration: underline; cursor: pointer;" onclick="checkTutorial()">Tutorial <i class="fa fa-external-link awesomeButtom" aria-hidden="true"></i></a>
+    <a style="padding-right: 10px; text-align: center; color: yellow; text-decoration: underline; cursor: pointer;" onclick= "taskDia()">Task <i class="fa fa-external-link awesomeButtom" aria-hidden="true"></i></a>
+
+    <!-- <span style="font-size: 14px;"><a id = "instruA" href="javascripts/introduction/index.html" target="_blank">   Instruction<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></span> -->
+    <span class="dropdown rightSpan" id="usernameSpan">
+      <text id="usernameButton" class="dropbtn"></text>
+      <div class="dropdown-content">
+        <!-- <a id = "taskButton" onclick= "taskDia()">Task</a> -->
+        <!-- <a id = "feedbackButton">Input comments</a> -->
+        <a id = "signOutButton">Sign out</a>
+      </div>
+    </span>
+    <span id = "noteSpan" class = "rightSpan">
+      <i class="fa fa-pencil-square-o" id = "editIcon" aria-hidden="true"></i>
+      <i class="fa fa-sticky-note-o" id="showNoteIcon" aria-hidden="true"></i>
+    </span>
+    <span class = "rightSpan" id = "addSpan">
+      Note-Editing Mode.
+    </span>
+  </div>
+  <div id = "canvas">
+    <div id = "list">
+        <div class = "label">
+          <label>Countries</label>
+          <a id = "deselectButton" onclick="deselectAll()">Deselect all</a>
+        </div>
+        <div id="countryDiv"></div>
+        <div id="legendDiv">
+          <div id = "legendRect"></div>
+          <label id = "legendLabel"></label>
+        </div>
+    </div>
+    <div id = "main">
+      <div id = "yearDiv"></div>
+      <div id = "mapDiv"></div>
+      <div id = "stackDiv"></div>
+    </div>
+    <span id="moveHandle1" class = "handle"></span>
+
+    <div id="showNoteDiv">
+    </div>
+    <span id="moveHandle2" class = "handle"></span>
+    <div id="showGraphDiv">
+      <!-- <span><i class="fas fa-times firstRowButton"></i></span> -->
+      <svg id = "graphSvg"/>
+    </div>
+  </div>
+  <div id = "tooltip">
+    <label id = "tipName"></label>
+  </div>
+  <div id = "postitDiv">
+    <textarea id = "postit"></textarea>
+    <div id = "entityDiv"></div>
+    <!-- </form> -->
+    <!-- <button id="addEntityButton"><i class="fas fa-plus-circle" id = "addEntityText"></i></button> -->
+    <div id="controllersDiv">
+      <button id="noteCancelButton">Cancel</button>
+      <button id="noteSaveButton">Publish</button>
+      <button id="noteUpdateButton">Update</button>
+      <canvas id="checkArrow" height="16"></canvas>
+      <!-- <input type="checkbox" id="publicBox"> -->
+      <!-- <label for="publicBox" id = "publicBoxLabel">Private</label> -->
+    </div>
+  </div>
+  <script src="javascripts/data.js"></script>
+  <script src="javascripts/ui.js"></script>
+  <script src="javascripts/stackedarea.js"></script>
+  <script src="javascripts/assist.js"></script>
+  <script src="javascripts/userAuthen.js"></script>
+  <script src="javascripts/mode.js"></script>  
+  <script src="javascripts/graph.js"></script>
+  <script src="javascripts/note.js"></script>
+  <script src="javascripts/map.js"></script>
+  <script src="javascripts/handler.js"></script>
+  <script type="text/javascript">
+    var curUi = "", curMode = "", curNote = "", curMap = "", yearAxisIns = "", handlerIns = ""
+    var curUser = new UserAuthen()
+    curUser.checkCookie()
+  </script>
+</body>

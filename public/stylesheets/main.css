@@ -1,0 +1,510 @@
+html{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+body {
+	font-size: 14px;
+	margin: 0px;
+	padding: 0;
+	height: 100vh;
+	width: 100vw;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+#headerBar{
+  height: 28px;
+  width: 100vh - 20px;
+  background-color: black;
+  color: white;
+  padding-right: 10px;
+  padding-left: 5px;
+  font-size: 20px;
+  padding-top: 2px;
+}
+
+.label{
+  padding: 5px;
+  background: #aaa;
+}
+
+.rowGroup{
+  display: flex;
+  margin-bottom: 2px;
+}
+
+#deselectButton{
+  display: none;
+  text-decoration: underline;
+  color: blue;
+  float: right;
+  cursor: pointer;
+}
+
+.countGroup{
+  width: 40px;
+  text-align: -webkit-right;
+}
+
+.noteCountGroup{
+  height: 40px;
+}
+
+#canvas {
+	display: flex;
+	height: calc(100vh - 20px);
+	width: 100%;
+}
+
+#list{
+	width: 235px !important;
+  min-width: 235px !important;
+	margin-right: 3px;
+  /*padding-left: 5px;*/
+  background-color: #eee;
+}
+
+#stackDiv{
+  margin-bottom: 10px;
+}
+
+.entityli{
+	/*cursor: pointer;*/
+  height: 20px;
+  padding-left: 3px;
+  width: 192px;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  margin-bottom: 2px;
+}
+
+#main{
+	display: flex;
+  flex-direction: column;
+  margin: 2px;
+	margin-top: 5px;
+	width: calc(100% - 245px);
+}
+
+.mapProveDiv > svg, #mapDiv > svg{
+  width: 100%;
+  height: 100%;
+}
+
+.yearProveDiv, #yearDiv{
+  display: flex;
+  /*display: inline-grid;*/
+  /*border-top: 1px solid #ccc;*/
+  /*border-left: 1px solid #ccc;*/
+  width: 100%;
+}
+
+.yearProveDiv div, #yearDiv div{
+  width: 32px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.labelDiv{
+  margin-top: 2px;
+}
+
+#rightDiv{
+	width: 250px;
+	padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 5px;
+}
+
+#countryDiv{
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: calc(99% - 60px);
+  padding-left: 5px;
+	/*background-color: #ccc;*/
+}
+
+#tooltip {   
+  position: absolute;
+  background-color: rgba(238, 238, 238, 0.5); 
+  visibility:hidden; 
+  z-index: 1000;
+  padding: 3px;
+  pointer-events: none;
+  /*border: 1px solid black;  */
+  /*z-index: 20000000;     */
+}
+
+label, text{
+  vertical-align: middle;
+}
+
+.hoverGroup{
+	pointer-events: none;
+}
+
+/*#checkBoxes{
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #ccc;
+}*/
+
+li {
+  list-style-type: none;
+}
+
+#legendDiv{
+  display: flex;
+  margin-top: 5px;
+  padding-left: 5px;
+}
+
+#legendLabel{
+  margin-left: 5px;
+}
+
+#stackLegendDiv{
+  overflow-y: auto;
+}
+
+#controllersDiv{
+	display: flex;
+	/*justify-content: space-between;*/
+}
+
+#checkArrow{
+	left: 40px;
+	margin-top: 5px;
+	width: 43px;
+}
+#publicBox{
+  margin-top: 4px;
+}
+#publicBoxLabel{
+  padding-top: 2px;
+}
+#postitDiv{
+    position:fixed;
+    top:50%;
+    left:50%;
+    /*min-height: 200px;*/
+    width: 304px;
+    display: none;
+    flex-direction: column;
+    background: #c1fbdf;
+}
+
+#postit{
+    position:relative;
+    background: #e0fcef;
+    border: 0;
+    height: 180px;
+    /*width: 300px;*/
+    resize: none;
+}
+
+#postit:focus{
+  outline: none;
+}
+
+#entityDiv{
+  /*background: #f9cae0;*/
+  overflow-y: auto;
+  height: auto;
+}
+
+.noteDisDiv{
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+    background: #e6e6e6;
+    /*background: #c1fbdf;*/
+}
+
+.noteDisDiv p{
+  padding: 2px;
+    margin: 0;
+    white-space: pre-line;
+    background: #f5f5f5;
+    /*background: #e0fcef;*/
+}
+
+#showNoteDiv{
+  min-width: 500px;
+}
+
+#showGraphDiv{
+  min-width: 150px;
+}
+
+#showNoteDiv, #showGraphDiv{
+  margin: 3px;
+  /*min-width: 500px;*/
+  display: none;
+  height: calc(100% - 6px);
+  /*float: right;*/
+  /*flex-direction: column;*/
+  /*overflow-y: auto;*/
+} 
+
+#graphSvg{
+  width: 100%;
+  height: 100%;
+}
+
+.showNoteArea{
+  overflow-y: scroll;
+  word-wrap: break-word;
+  margin-top: 5px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.entityChartDispDiv, .entityNoteDispDiv{
+  /*padding: 2px;*/
+  /*height: 300px;*/
+  display: flex;
+  flex-direction: column;
+}
+
+.entityNoteLabel, .entityNoteDisLabel{
+  margin-right: 5px;
+  margin-left: 5px;
+  background: #f5f5f5;
+  /*line-height: 1.3;*/
+  padding-left: 2px;
+  padding-right: 2px;
+  /*vertical-align: sub;*/
+}
+
+.entityNoteDisLabel{
+  display: inline-block;
+  margin-top: 5px; 
+}
+
+.noteButtonDiv, .firstRowButton{
+  text-align: right;
+  padding-bottom: 2px;
+}
+
+.noteButtonDiv button:hover:enabled{
+  color: #4394da;
+}
+
+.noteButtonDiv button:active{  
+  outline: none;
+  transform: scale(.8);
+}
+
+.noteButtonDiv button{
+  outline: none;
+  margin: 2px;
+  border: 0;
+  background: #eee;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.selectedLi text{
+  /*padding-left: 3px;*/
+  padding-right: 3px;
+}
+
+.axis path,
+.axis line {
+  /*fill: none;*/
+  /*stroke: none;*/
+  shape-rendering: crispEdges;
+}
+
+.browser text {
+  text-anchor: end;
+}
+
+#publicBox{
+  float: right;
+}
+
+#dialog-form input { display:block; }
+#dialog-form input.text { margin-bottom:12px; width:95%; padding: .4em; }
+/*#dialog-form */
+fieldset { padding:0; border:0; }
+#dialog-form fieldset a{ text-decoration: underline; cursor: pointer;}
+
+#captureIcon:active, #editIcon:active, #showNoteIcon:active{
+  transform: scale(.8);
+}
+
+fieldset .taskLabel{
+  display: block;
+  margin-bottom: 10px;
+}
+
+fieldset .descrip{
+  width: 100%;
+}
+
+fieldset .inputedText{
+  background-color: #EBEBE4;
+  /*border:1px solid #ABADB3;*/
+  border: none;
+  width: 100%;
+  /*padding:2px 1px;*/
+}
+
+.edgepath{
+  stroke: black;
+  stroke-width: 2px;
+  fill: none;
+  opacity: .4;
+}
+
+#noteSpan{
+  cursor: pointer;
+}
+
+#addSpan{
+  display: none;
+  color: #fde9cc;
+}
+
+.rightSpan{
+  float: right;
+  margin-left: 10px;
+}
+
+#noteSpan i{
+  margin: 2px;
+}
+
+#postitDiv button, #addWholeButton{
+  margin: 2px;
+  /*width: 50px;*/
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
+#postitDiv button:hover{
+  color: #4394da;
+}
+
+#postitDiv button:active{  
+  outline: none;
+  transform: scale(.8);
+}
+
+#addWholeButton{
+  display: none;
+  position: absolute;
+  /*right: 305px;*/
+  /*bottom: 25px;*/
+}
+
+.addEntityText{
+  font-family: "FontAwesome";
+  font-size: 24px;
+  font-style: normal;
+  color: #42bc82;
+  fill: /*#686868;*/ #42bc82;
+  cursor: pointer;
+}
+
+.addEntityText:hover{
+  color: #57c892;
+  fill: #57c892;/*#808080;*/
+}
+
+.awesomeButton, .firstRowButton{
+  font-family: "FontAwesome";
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.playerButton{
+  font-family: "FontAwesome";
+  font-size: 30px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.firstRowDiv{
+  margin-left: 2px;
+  margin-right: 20px;
+}
+
+.firstRowButton{
+  float: right;
+  font-size: 15px;
+  margin: 2px;
+}
+
+.handle{
+  position:relative;
+  width:5px;
+  right:-3px;
+  display: none;
+  background-color:#ddd;
+  float:left;
+  cursor:ew-resize;
+  border-left:1px solid #999;
+  border-right:1px solid #999;
+  height:50px
+}
+
+#historyDialog{
+  padding: 0;
+
+}
+
+#grid{
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-size: 14px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+/**** drop down menu ****/
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    border: none;
+}
+
+/*.dropdown {
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+}*/
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ccc;
+    min-width: 40px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0px;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 2px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdown-content a:hover {background-color: #aaa}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    /*background-color: #3e8e41;*/
+}

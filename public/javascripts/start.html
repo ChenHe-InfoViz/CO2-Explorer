@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  <link rel="shortcut icon" type="image/x-icon" href="./javascripts/favicon.png"/>
+<title>CO2 emission explorer</title>
+</head>
+<style>
+
+#text {
+  font: 14px sans-serif;
+  line-height: 1.4em;
+  letter-spacing: 0.06em;
+}
+
+.awesomeButtom{
+  font-family: "FontAwesome";
+  font-size: 18px;
+}
+
+button{
+  border: none;
+  background: #eee;
+  font-size: 21px;
+  cursor: pointer;;
+}
+
+#note{
+  color: red;
+}
+
+</style>
+<body id = "text">
+  <!--<div id="dpi" style="height: 1in; width: 1in; left: 100%; position: fixed; top: 100%;"></div>-->
+<div style="margin:10px;">
+<h2>Welcome!</h2>
+<p>The study explores how various people use a visualization to make discoveries, which comprises the following three steps:</p>
+<img style="border:1px solid black;" src="javascripts/guide.jpg" alt="1. Complete an interactive tutorial;
+2. Freely explore the visualization to complete a task;
+3. Fill out a questionnaire.">
+
+<h2>Before you start, please make sure:</h2>
+<h3>1. You are using the Chrome browser for the study. <a href = "https://www.google.com/chrome/?brand=CHBD&gclid=CjwKCAiA27LvBRB0EiwAPc8XWXd6ql3cKtIviRkKF6GoOwVqlGVtCeoNGXKqp4fOmU5YF0nE7aPqsRoC7bQQAvD_BwE&gclsrc=aw.ds" target = "_blank">Download Chrome <i class="fa fa-external-link awesomeButtom" aria-hidden="true"></i></a> </h3>
+<h3>2. Your browser allows popup windows.</h3>
+<h3 id = "screen">3. Your window size is at least 1900 pixels wide, and 800 pixels high.</h3>
+<p>By proceeding, you agree to <a href = "https://drive.google.com/file/d/11v0jee_cxoKDVlnnzfJ-SxMMOLNNnd4l/view?usp=sharing" target="_blank">the Consent of Participation</a>.</p>
+<h2><button onclick="checkProceed()">Proceed to the tutorial</button></h2>
+<h3 id = "note"></h3>
+</div>
+<script type="text/javascript">
+  var chrome = false, okSize = true, note = ""
+  // var dpi_x = document.getElementById('dpi').offsetWidth;
+  // var dpi_y = document.getElementById('dpi').offsetHeight;
+  var width = window.innerWidth//screen.availWidth /// dpi_x;
+  var height = window.innerHeight//screen.availHeight /// dpi_y;
+
+  $("#screen").append("<div id = 'screenNote' style='color:red;'>Your current window is " + width + " pixels wide, and " + height + " pixels high.</div>")
+
+  if(width >= 1900 && height >= 800) $('#screenNote').css('color', 'green')
+  // please note, 
+// that IE11 now returns undefined again for window.chrome
+// and new Opera 30 outputs true for window.chrome
+// but needs to check if window.opr is not undefined
+// and new IE Edge outputs to true now for window.chrome
+// and if not iOS Chrome check
+// so use the below updated condition
+var isChromium = window.chrome;
+var winNav = window.navigator;
+var vendorName = winNav.vendor;
+var isOpera = typeof window.opr !== "undefined";
+var isIEedge = winNav.userAgent.indexOf("Edge") > -1;
+var isIOSChrome = winNav.userAgent.match("CriOS");
+
+
+if(isIOSChrome){
+   // is Google Chrome on IOS
+   chrome = false
+} 
+else if(isChromium !== null && typeof isChromium !== "undefined" && vendorName === "Google Inc." &&isOpera === false && isIEedge === false){
+   chrome = true
+}
+else{
+  note += "Please use the Chrome browser to proceed. \n"
+}
+if(width < 1900 || height < 800){
+  okSize = false
+  note += "Please use a larger screen to proceed."
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function checkProceed(){
+  if(chrome && okSize){
+    var v = getCookie("coemissionVersion")
+    if(v == "meditutorial") window.open(v, "_self")
+    else if(v == "healthtutorial") window.open(v, "_self")
+    else{
+      $.ajax({
+          type: "GET",
+          url: "/proceed",
+          success: function(response){
+            document.cookie = "coemissionVersion=" + response.link
+            window.open(response.link, "_self")
+          },
+          error: function(){
+            console.log("get index page failed")
+          }
+        })
+    }
+  }
+  else{
+    $("#note").html(note)
+  }
+}
+
+</script>
+</body>

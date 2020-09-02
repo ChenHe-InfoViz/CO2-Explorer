@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <script src="https://code.jquery.com/jquery-migrate-3.0.0.min.js"></script>
+  <style>
+    input { display:block; }
+    input.text { margin-bottom:12px; width:95%; padding: .4em; }
+    fieldset { padding:0; border:0; }
+    fieldset a{ text-decoration: underline; cursor: pointer;}
+  </style>
+  <script>
+    $(function(){
+    function getParameterByName(name, url) {
+          if (!url) url = window.location.href;
+          name = name.replace(/[\[\]]/g, "\\$&");
+          var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+              results = regex.exec(url);
+          if (!results) return null;
+          if (!results[2]) return '';
+          return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+      
+      function preprocess(){
+        var token = getParameterByName('token');
+        // console.log(token)
+        resetPasswordDia(token)
+      }
+      preprocess()
+    function resetPasswordDia(token){
+      var fieldset = d3.select("#dialog-form fieldset")
+      $("fieldset").empty();
+      fieldset.append("label").attr({
+        "for": "password"
+      }).text("New password")
+      fieldset.append("input").attr({
+        type: "password",
+        id: "password",
+        class: "text ui-widget-content ui-corner-all"
+      }).on("focusin", function(){
+        d3.select("#message").text("")
+      })
+      fieldset.append("label").attr({
+        "for": "confirm"
+      }).text("Confirm")
+      fieldset.append("input").attr({
+        type: "password",
+        id: "confirm",
+        class: "text ui-widget-content ui-corner-all"
+      }).on("focusin", function(){
+        d3.select("#message").text("")
+      })
+      fieldset.append("label").text("").attr("id", "message");
+
+      var diaObj = {
+        title: "Reset password",
+        autoOpen: false,
+        height: 340,
+        width: 350,
+        modal: true,
+        buttons: {
+          "Reset": function(){resetPasswordPro(token)},
+          Cancel: function() {
+            $("#dialog-form").dialog( "close" );
+          }
+        },
+        close: function() {
+          //form[ 0 ].reset();
+          //allFields.removeClass( "ui-state-error" );
+        }
+      }
+      $("#dialog-form").off("keypress")  
+      $("#dialog-form").dialog(diaObj)
+      $("#dialog-form").dialog("open")
+      $("#password").focus();
+      $("#dialog-form").keypress(function(e) {
+        if (e.keyCode == $.ui.keyCode.ENTER) {
+          // console.log("forget")
+          $("#dialog-form").parent().find(".ui-dialog-buttonpane button:eq(0)").trigger("click");
+      }
+  });
+
+    }
+
+    function resetPasswordPro(token){
+      var pass = $("#password").val()
+      var con = $("#confirm").val()
+      if(pass != con){
+        d3.select("#message").text("The inputted passwords are not consistent.").style("color", "red")
+        return;
+      }
+      $.ajax({
+        type: "POST",
+          url: "/user/reset",
+          dataType: "json",
+          contentType:'application/json',
+          data: JSON.stringify({token: token, password: pass}),
+          success: function(response){
+            // console.log(response)
+            if(response.success){
+              d3.select("#message").text(response.message).style("color", "green")
+              window.location = window.location.origin + response.redirect;
+            } 
+            else{
+              console.log("error")
+              d3.select("#message").text(response.message).style({color: "red"})
+            }
+          },
+          error: function () {console.log("reset error!")}
+      })
+    }
+    })
+  </script>
+</head>
+<body>
+  <div id="dialog-form">
+    <form>
+      <fieldset>
+      </fieldset>
+    </form>
+  </div>
+</body>
+</html>
