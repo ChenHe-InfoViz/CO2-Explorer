@@ -12,4 +12,6 @@ To run this app:
 2. start mongoDB: sudo mongod
 3. in your terminal, navigate to the project folder, and install all dependancies: npm install
 4. start the server: node bin/www
-5. open your browser and input the url localhost:3500
+5. open your browser and input the url http://localhost:3500/
+
+An online version with a user registration at https://ss-18.it.helsinki.fi/health
