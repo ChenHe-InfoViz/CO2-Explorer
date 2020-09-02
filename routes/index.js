@@ -400,29 +400,8 @@ router.post("/viewdiscussion", function(req, res){
       res.json(notes)
     }
   }
-  if(req.body.username == "testHealth"){
-    var ids = ["5e29c71fc11ccd0788191c89", "5e29c704c11ccd0788191c7d"]
-    noteCollection.find({_id: ids}).exec(function(err, docs){
-      if(err){
-         console.log(err)
-         return
-      }
-      return res.json(docs)
-    })
-  }
-    
-  else if (req.body.username == "testMedi"){
-    var ids = ["5e29b42b0aa73906a57788d5", "5e29b4100aa73906a57788c9"]
-    noteCollection.find({_id: ids}).exec(function(err, docs){
-      if(err){
-         console.log(err)
-         return
-      }
-      return res.json(docs)
-    })
-  }
 
-  else findNoteRecur([req.body.id])
+  findNoteRecur([req.body.id])
 })
 
 

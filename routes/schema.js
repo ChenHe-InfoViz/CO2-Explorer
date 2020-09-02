@@ -7,8 +7,7 @@ var noteSchema = new mongoose.Schema({
 	"note": String,
 	entities: [{
 		text: String,
-		"value": Number, //type: point
-		// gender: String, //type: point
+		"value": Number,
 		entities: [String],
 		countries: [String],
 		year: Number, //type: line
@@ -33,11 +32,9 @@ var noteSchema = new mongoose.Schema({
 var entitySchema = new mongoose.Schema({
 	text: String,
 	"value": Number,
-	// gender: String,
 	entities: [String],
 	year: Number,
 	countries: [String],
-	// note: mongoose.Schema.Types.ObjectId,
 	"type": {type: String},
 	"noteCount": {type: Number, required: true, default: 1},
 	// "noteCount": {type: Number, required: true, default: 0},
@@ -55,20 +52,6 @@ var occupationSchema = new mongoose.Schema({
 	// "noteCount": {type: Number, required: true, default: 0},
 })
 
-// var historySchema = new mongoose.Schema({
-// 	action: {type: String, required: true},
-// 	_id: {type: String, required: true, unique: true, index: true},
-// 	parent: {type: String},
-// 	children: Array,
-// 	selectedEntities: [{
-// 		entity: {type: String},
-// 		"type": {type: String},
-// 		_id: {type: String},
-// 	}],
-// 	noteids: Array,
-// 	// index: {type: Number, required: true}
-// }, {strict: false})
-
 var logSchema = new mongoose.Schema({
 	// _id: {type: String, required: true},
 	"type": {type: String, required: true},
@@ -76,8 +59,6 @@ var logSchema = new mongoose.Schema({
 	user: {type: String}
 }, {strict: false})
 
-// var Dtcbio = mongoose.model('document', bioSchema);
-// var Effect = mongoose.model('effect', effectSchema);
 var Note = mongoose.model('note', noteSchema);
 var Occupation = mongoose.model('occupation', occupationSchema);
 var Entity = mongoose.model('entity', entitySchema);
