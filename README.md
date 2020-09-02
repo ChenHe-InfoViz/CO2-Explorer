@@ -1,8 +1,8 @@
 # CO2 Explorer
  
-This CO2 Explorer has
+This CO2 Explorer consists of
 
-- a line chart and a map for exploring various countries' CO2 emission values during 1960 and 2013.
+- a line chart and a map for exploring various countries' CO2 emission values during 1960 and 2013;
 
 - a note component for users to share their discoveries.
 
