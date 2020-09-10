@@ -15,3 +15,4 @@ To run this app:
 5. open your browser and input the url http://localhost:3500/
 
 An online version with a user registration at https://ss-18.it.helsinki.fi/health
+A video demo: https://youtu.be/WX7NmGjBK2s
