@@ -4,7 +4,7 @@ This CO2 Explorer consists of
 
 - a line chart and a map for exploring various countries' CO2 emission values during 1960 and 2013;
 
-- a note component for users to share their discoveries.
+- a note component for users to publish their discoveries.
 
 It is a Node.js web application using Express framework and MongoDB for data storage.
 To run this app:
