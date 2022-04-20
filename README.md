@@ -1,10 +1,10 @@
 # CO2 Explorer
  
-This CO2 Explorer has
+This CO2 Explorer consists of
 
-- a line chart and a map for exploring various countries' CO2 emission values during 1960 and 2013.
+- a line chart and a map for exploring various countries' CO2 emission values during 1960 and 2013;
 
-- a note component for users to share their discoveries.
+- a note component for users to publish their discoveries.
 
 It is a Node.js web application using Express framework and MongoDB for data storage.
 To run this app:
@@ -15,3 +15,5 @@ To run this app:
 5. open your browser and input the url http://localhost:3500/
 
 An online version with a user registration at https://ss-18.it.helsinki.fi/health
+
+A video demo: https://youtu.be/WX7NmGjBK2s
