@@ -360,9 +360,9 @@ fieldset .inputedText{
   opacity: .4;
 }
 
-#noteSpan{
+/*#noteSpan{
   cursor: pointer;
-}
+}*/
 
 #addSpan{
   display: none;
@@ -372,6 +372,7 @@ fieldset .inputedText{
 .rightSpan{
   float: right;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 #noteSpan i{
@@ -501,9 +502,9 @@ fieldset .inputedText{
 
 .dropdown-content a:hover {background-color: #aaa}
 
-.dropdown:hover .dropdown-content {
+/*.dropdown:hover .dropdown-content {
     display: block;
-}
+}*/
 
 .dropdown:hover .dropbtn {
     /*background-color: #3e8e41;*/

@@ -24,16 +24,17 @@
   <div id = "headerBar">
     <span style="text-align: center;">CO2 emission explorer</span>      
     <a style="padding-right: 10px; text-align: center; color: yellow; text-decoration: underline; cursor: pointer;" onclick="checkTutorial()">Tutorial <i class="fa fa-external-link awesomeButtom" aria-hidden="true"></i></a>
-    <a style="padding-right: 10px; text-align: center; color: yellow; text-decoration: underline; cursor: pointer;" onclick= "taskDia()">Task <i class="fa fa-external-link awesomeButtom" aria-hidden="true"></i></a>
+    <!--<a style="padding-right: 10px; text-align: center; color: yellow; text-decoration: underline; cursor: pointer;" onclick= "taskDia()">Task <i class="fa fa-external-link awesomeButtom" aria-hidden="true"></i></a>-->
 
     <!-- <span style="font-size: 14px;"><a id = "instruA" href="javascripts/introduction/index.html" target="_blank">   Instruction<i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a></span> -->
-    <span class="dropdown rightSpan" id="usernameSpan">
+    <span class="rightSpan">
+    <!--<span class="dropdown rightSpan" id="usernameSpan">-->
       <text id="usernameButton" class="dropbtn"></text>
-      <div class="dropdown-content">
-        <!-- <a id = "taskButton" onclick= "taskDia()">Task</a> -->
-        <!-- <a id = "feedbackButton">Input comments</a> -->
+      <!--<div class="dropdown-content">
+        <!-- <a id = "taskButton" onclick= "taskDia()">Task</a>
+        <!-- <a id = "feedbackButton">Input comments</a>
         <a id = "signOutButton">Sign out</a>
-      </div>
+      </div>-->
     </span>
     <span id = "noteSpan" class = "rightSpan">
       <i class="fa fa-pencil-square-o" id = "editIcon" aria-hidden="true"></i>
@@ -91,12 +92,12 @@
   <script src="javascripts/ui.js"></script>
   <script src="javascripts/stackedarea.js"></script>
   <script src="javascripts/assist.js"></script>
-  <script src="javascripts/userAuthen.js"></script>
   <script src="javascripts/mode.js"></script>  
   <script src="javascripts/graph.js"></script>
   <script src="javascripts/note.js"></script>
   <script src="javascripts/map.js"></script>
   <script src="javascripts/handler.js"></script>
+  <script src="javascripts/userAuthen.js"></script>
   <script type="text/javascript">
     var curUi = "", curMode = "", curNote = "", curMap = "", yearAxisIns = "", handlerIns = ""
     var curUser = new UserAuthen()

@@ -5,6 +5,12 @@ UserAuthen = function(){
   this.emailVali = false
   this.passVali = false;
   this.username = ""
+  self = this
+  $("#usernameButton").on("click", function(){
+    if(self.username == "")
+      self.signinDia()
+    else self.signoutPro()
+  })
 }
 
 UserAuthen.prototype.signinDia = function(mess = ""){
@@ -15,7 +21,7 @@ UserAuthen.prototype.signinDia = function(mess = ""){
   $("fieldset").empty();
   ele.append("label").attrs({
     "for": "username"
-  }).text("Worker ID")
+  }).text("Username")
   ele.append("input").attrs({
     "type": "text",
     "id": "username",
@@ -29,7 +35,7 @@ UserAuthen.prototype.signinDia = function(mess = ""){
     "id": "password",
     class: "text ui-widget-content ui-corner-all"
   }).on("focusin", function(){ d3.select("#message").text(""); })
-  ele.append("label").text("Forgot Worker ID?").append("a").text(" Get my Worker ID.").attr("class", "usernameLink").append("br")
+  ele.append("label").text("Forgot username?").append("a").text(" Get my username.").attr("class", "usernameLink").append("br")
   ele.append("label").text("Forgot password?").append("a").text(" Reset my password.").attr("class", "passwordLink").append("br")
   ele.append("label").text("No account?").append("a").text(" Sign up.").attr("class", "signupLink").append("br")
   ele.append("label").attr("id", "message")
@@ -98,7 +104,7 @@ UserAuthen.prototype.signupDia = function(){
   var div = fieldset.append("div").attr("class", "infoLabel")
   div.append("label").attrs({
     "for": "username",
-  }).text("Worker ID")
+  }).text("Username")
   div.append("label").attr("id", "nameErrorLabel")
   fieldset.append("input").attrs({
     type: "text",
@@ -201,9 +207,9 @@ UserAuthen.prototype.checkUser = function(forward = false){
   self.userVali = false;
   var nameVali = ["document", "dtcbio", "effect", "entitie", "log", "note", "user"]
   var d = $("#username").val().trim();
-  if(d == "") d3.select("#nameErrorLabel").text( "  Please input a Worker ID.").style("color", "red")
+  if(d == "") d3.select("#nameErrorLabel").text( "  Please input a username.").style("color", "red")
   // else if(!(/^[a-z]+$/i.test(d.trim()))) d3.select("#nameErrorLabel").text( "  Only letters are allowed in Username.").style("color", "red")
-  else if(nameVali.indexOf(d) > -1) d3.select("#nameErrorLabel").text( "  This Worker ID already exists.").style("color", "red")
+  else if(nameVali.indexOf(d) > -1) d3.select("#nameErrorLabel").text( "  This username already exists.").style("color", "red")
   else 
   $.ajax({
     type: "POST",
@@ -217,7 +223,7 @@ UserAuthen.prototype.checkUser = function(forward = false){
         if(forward)
           self.checkEmail(true)
       }
-      else d3.select("#nameErrorLabel").text("  This Worker ID already exists.").style("color", "red")
+      else d3.select("#nameErrorLabel").text("  This username already exists.").style("color", "red")
     },
     error: function () {console.log("username dup error!")}
   })
@@ -281,27 +287,35 @@ UserAuthen.prototype.signinPro = function(){
           document.cookie = "coemissionSession="+response.session;
           var obj = {type: "startSession", mode: "normalMode", time: getFormatedTime(), user: self.username}
           addLog(obj) 
-          yearAxisIns = new yearAxis()
-          curMode = new ModeClass()
-          curNote = new Note()
-          curUi = new Ui()
-          if(handlerIns == "")
-              handlerIns = new Handler()
+          // yearAxisIns = new yearAxis()
+          // curMode = new ModeClass()
+          // curNote = new Note()
+          // curUi = new Ui()
+          // if(handlerIns == "")
+          //     handlerIns = new Handler()
           // proveMode = new ModeClass("grid")
           // curUi.initStackedArea()
           // drawNoteFramework()
           // gloDiv = "#main";
           // getEntityList()
-          d3.select("#usernameButton").text(self.username)
+          d3.select("#usernameButton").text(self.username).on("mouseenter", function(){
+            showTooltip("Click to log out.", d3.event.pageX - 60, d3.event.pageY)
+          }).on("mouseleave", function(){
+            d3.select("#tooltip").style("visibility", "hidden")
+          })
           $("#dialog-form").dialog("close")
-          taskDia(false)
+          getNoteCount()
+          if($("#showNoteDiv").css("display") != "none")
+            $("#showNoteIcon").click()
+          d3.select("#editIcon").style("display", null)
+          // taskDia(false)
         }
         else if(response.message == 'Incorrect version.'){
           window.open(window.location.origin + "/medi", "_self")
         }
         else{
           //console.log("error")
-          d3.select("#message").text("Worker ID or password incorrect.").styles({color: "red"})
+          d3.select("#message").text("Username or password incorrect.").styles({color: "red"})
         }
       },
       error: function () {console.log("sign in error!")}
@@ -322,20 +336,20 @@ UserAuthen.prototype.getUsernameDia = function(){
   }).on("focusin", function(){
     d3.select("#message").text("")
   })
-  fieldset.append("label").text("Know your Worker ID?").append("a").text(" Sign in.").attr("class", "signinLink").append("br")
+  fieldset.append("label").text("Know your Username?").append("a").text(" Sign in.").attr("class", "signinLink").append("br")
   fieldset.append("label").attr("id", "message").text("")
   $(".signinLink").on("click", function(){
     self.signinDia()
   })
 
   this.diaObj = {
-    title: "Get Worker ID",
+    title: "Get username",
     autoOpen: false,
     height: 260,
     width: 350,
     modal: true,
     buttons: {
-      "Get Worker ID": function(){
+      "Get username": function(){
         self.getUsernamePro()
       },
       Cancel: function() {
@@ -535,9 +549,23 @@ UserAuthen.prototype.checkCookie = function() {
             //console.log(response)
             if(response.message == "login"){
               document.cookie = "coemissionSession="+"\"\""
-              self.signupDia()
+              // self.signupDia()
+              self.username = "";
+              yearAxisIns = new yearAxis()
+              curMode = new ModeClass()
+              curNote = new Note()
+              curUi = new Ui()
+              if(handlerIns == "")
+                handlerIns = new Handler()
+              d3.select("#usernameButton").text("Sign in").on("mouseenter", function(){
+                showTooltip("Click to sign in.", d3.event.pageX - 60, d3.event.pageY)
+              }).on("mouseleave", function(){
+                d3.select("#tooltip").style("visibility", "hidden")
+              })
+              d3.select("#editIcon").style("display", "none")
             } 
             else{
+              console.log("cookie in")
               self.username = response.user;
               var obj = {type: "startSession",  mode: "normalMode", time: getFormatedTime(), user: self.username}
               addLog(obj)
@@ -547,40 +575,74 @@ UserAuthen.prototype.checkCookie = function() {
               curUi = new Ui()
               if(handlerIns == "")
                 handlerIns = new Handler()
-              d3.select("#usernameButton").text(self.username)
+              d3.select("#usernameButton").text(self.username).on("mouseenter", function(){
+                showTooltip("Click to log out.", d3.event.pageX - 60, d3.event.pageY)
+              }).on("mouseleave", function(){
+                d3.select("#tooltip").style("visibility", "hidden")
+              })
+              d3.select("#editIcon").style("display", null)
             }
           },
           error: function () {console.log("sign in session error!")}
         })
     }
     else{
-      console.log("signuo?")
-        this.signupDia()
+        console.log("signuo?")
+        // this.signupDia()
+        self.username = "";
+        yearAxisIns = new yearAxis()
+        curMode = new ModeClass()
+        curNote = new Note()
+        curUi = new Ui()
+        if(handlerIns == "")
+          handlerIns = new Handler()
+        d3.select("#usernameButton").text("Sign in").on("mouseenter", function(){
+          showTooltip("Click to sign in.", d3.event.pageX - 60, d3.event.pageY)
+        }).on("mouseleave", function(){
+          d3.select("#tooltip").style("visibility", "hidden")
+        })
+        d3.select("#editIcon").style("display", "none")
     }
 }
 
 UserAuthen.prototype.signoutPro = function(){
   document.cookie = "coemissionSession="+"\"\"";
 
-  d3.select("#usernameButton").text("")
-  selectedEntities = []
-  selectedData = []
-  yearAxisIns = null
-  curNote = null
-  curMode = null
-  curMap = null
-  curUi = null
-  $("#stackDiv").empty()
-  $("#yearDiv").empty()
-  $("#mapDiv").empty()
-  $("#countryDiv").empty()
+  d3.select("#usernameButton").text("Sign in").on("mouseenter", function(){
+    showTooltip("Click to sign in.", d3.event.pageX - 60, d3.event.pageY)
+  }).on("mouseleave", function(){
+    d3.select("#tooltip").style("visibility", "hidden")
+  })
+  self.username = "";
+  // selectedEntities = []
+  // selectedData = []
+  // yearAxisIns = null
+  // curNote = null
+  // curMode = null
+  // curMap = null
+  // curUi = null
+  // $("#stackDiv").empty()
+  // $("#yearDiv").empty()
+  // $("#mapDiv").empty()
+  // $("#countryDiv").empty()
+  if(curMode != "normalMode"){
+    curMode.state = "normalMode"
+    curMode[curMode.state]()
+    curMode[curMode.state + "Map"]()
+    curMode[curMode.state + "Note"]()
+    $("#postit").data("_id", null)
+    curNote.entityInNote = []
+    getNoteCount()
+  }
   $("#postitDiv").css("display", "none")
-  $("#showNoteDiv").empty()
-  $("#graphSvg").empty()
+  // $("#showNoteDiv").empty()
+  // $("#graphSvg").empty()
   
-  $("#showNoteDiv").css("display", "none")
-  $("#showGraphDiv").css("display", "none")
-  $("#deselectButton").css("display", "none")
+  if($("#showNoteDiv").css("display") != "none")
+    $("#showNoteIcon").click()
+  // $("#showGraphDiv").css("display", "none")
+  // $("#deselectButton").css("display", "none")
+  d3.select("#editIcon").style("display", "none")
   this.signinDia();
 }
 

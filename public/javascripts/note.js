@@ -397,34 +397,35 @@ Note.prototype.updateNotes = function(notes){
     	})
 	})
 
-	firstDiv.append("text").text("\uf10e").attr("class", "citeNoteButton firstRowButton").on("click", function(d){
-		if($(this).prop("disabled")) return
-		if(curMode.state == "normalMode"){
-			var s = "note"
-			if(curNote.discussionNote) s = "discussion"
-			var obj = {type: "replyToNote", session: s, note: d._id, time: getFormatedTime(), user: curUser.username}
-	      	addLog(obj)
-			annotation()
-		}
-		addEntityToNote({note: d._id, text: d.note, type: "note"})
-    	d3.select(this).style("color", "#999")
-    	$(this).prop("disabled", true)
-	}).on("mouseenter", function(d){
-		var re = curNote.entityInNote.filter( a => a.type == "note").map(a => a.note)
-		var text = ""
-		if(re.indexOf(d._id) > -1) {
-			text = "Referred."
-		}
-		else if(d._id == $("#postit").data("_id")){
-			text = "In edit."
-		}
-		else text = "Refer to this note."
-		showTooltip(text, d3.event.pageX - 12, d3.event.pageY)
-	}).on("mouseleave", function(){
-		d3.select("#tooltip").styles({
-        	visibility: "hidden",
-    	})
-	})
+	if(curUser.username != "")
+		firstDiv.append("text").text("\uf10e").attr("class", "citeNoteButton firstRowButton").on("click", function(d){
+			if($(this).prop("disabled")) return
+			if(curMode.state == "normalMode"){
+				var s = "note"
+				if(curNote.discussionNote) s = "discussion"
+				var obj = {type: "replyToNote", session: s, note: d._id, time: getFormatedTime(), user: curUser.username}
+		      	addLog(obj)
+				annotation()
+			}
+			addEntityToNote({note: d._id, text: d.note, type: "note"})
+	    	d3.select(this).style("color", "#999")
+	    	$(this).prop("disabled", true)
+		}).on("mouseenter", function(d){
+			var re = curNote.entityInNote.filter( a => a.type == "note").map(a => a.note)
+			var text = ""
+			if(re.indexOf(d._id) > -1) {
+				text = "Referred."
+			}
+			else if(d._id == $("#postit").data("_id")){
+				text = "In edit."
+			}
+			else text = "Refer to this note."
+			showTooltip(text, d3.event.pageX - 12, d3.event.pageY)
+		}).on("mouseleave", function(){
+			d3.select("#tooltip").styles({
+	        	visibility: "hidden",
+	    	})
+		})
 
 	firstDiv.append("text").text("\uf086").attr("class", "viewHisButton firstRowButton").on("click", function(d){
 		self.discussionNote = d3.select(this.parentNode.parentNode)

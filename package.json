@@ -20,7 +20,7 @@
     "jade": "^1.11.0",
     "jquery": "^3.4.1",
     "jsdom": "latest",
-    "mongoose": "latest",
+    "mongoose": "^5.3.4",
     "morgan": "latest",
     "node-schedule": "latest",
     "nodemailer": "latest",
