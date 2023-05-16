@@ -14,6 +14,6 @@ To run this app:
 4. start the server: node bin/www
 5. open your browser and input the url http://localhost:3500/
 
-An online version with a user registration at https://ss-18.it.helsinki.fi/health
+An online version at https://ss-18.it.helsinki.fi/health
 
-A video demo: https://youtu.be/WX7NmGjBK2s
+A video demo at https://youtu.be/WX7NmGjBK2s
